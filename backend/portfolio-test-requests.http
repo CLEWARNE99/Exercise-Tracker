@@ -1,0 +1,625 @@
+@INVALID_USER_ID = 369b336b8c8867f2cc165159
+@TEST_ID = 6a794dfe4c1871cd060b461e
+
+@ID_1 = 6a795fd5b3182c9e9ea183ba
+@ID_2 = 6a795fd7b3182c9e9ea183bc
+@ID_3 = 6a795fdbb3182c9e9ea183be
+@ID_4 = 6a795fdfb3182c9e9ea183c0
+@ID_5 = 6a795fe5b3182c9e9ea183c2
+@ID_6 = 6a795fe7b3182c9e9ea183c4
+@ID_7 = 6a795fedb3182c9e9ea183c6
+@ID_8 = 6a795ff1b3182c9e9ea183c8
+@ID_9 = 6a795ff8b3182c9e9ea183ca
+@ID_10 = 6a795ffbb3182c9e9ea183cc
+
+#TEST req 1
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 5,
+    "weight": 20,
+    "unit": "lbs",
+    "date": "05-24-26"
+}
+###
+#Test req 2
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Squat",
+    "reps": 5,
+    "weight": 35,
+    "unit": "lbs",
+    "date": "05-25-2026"
+}
+
+###
+#Test req 3
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "The Big One",
+    "reps": 10,
+    "weight": 25,
+    "unit": "lbs",
+    "date": "05-24-2026"
+}
+
+###
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "The Kathy",
+    "reps": 10,
+    "weight": 70,
+    "unit": "lbs",
+    "date": "05-25-2026"
+}
+
+###
+#Test invalid addition
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": 34,
+    "reps": 10,
+    "weight": 70,
+    "unit": "lbs",
+    "date": "05-25-2026"
+}
+
+###
+#Retrieve all test
+GET http://localhost:3000/exercises HTTP/1.1
+
+###
+#Retrieve exercise by name tests
+GET http://localhost:3000/exercises?name=The Kathy HTTP/1.1
+
+###
+GET http://localhost:3000/exercises?name=The Big One HTTP/1.1
+
+###
+#Retrieve exercise by other criteria
+GET http://localhost:3000/exercises?date=05-24-2026 HTTP/1.1
+
+###
+GET http://localhost:3000/exercises?reps=5 HTTP/1.1
+
+###
+GET http://localhost:3000/exercises?unit=lbs HTTP/1.1
+
+###
+#Retrieve by multiple criteria
+GET http://localhost:3000/exercises?name=Cronch&reps=5&unit=lbs HTTP/1.1
+
+###
+#Retrieve by id
+GET http://localhost:3000/exercises/{{TEST_ID}} HTTP/1.1
+
+###
+#Test invalid id
+GET http://localhost:3000/exercises/{{INVALID_USER_ID}} HTTP/1.1
+
+###
+#Test update
+PUT http://localhost:3000/exercises/{{TEST_ID}} HTTP/1.1
+content-type: application/json
+
+{
+    "reps": 15,
+    "unit": "kgs"
+}
+
+###
+PUT http://localhost:3000/exercises/{{TEST_ID}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Bronch",
+    "reps": 15,
+    "weight": 1000,
+    "unit": "kgs",
+    "date": "09-10-2024"
+}
+
+###
+#Invalid id update
+PUT http://localhost:3000/exercises/{{INVALID_USER_ID}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "oiawt"
+}
+
+###
+#Delete by id test
+DELETE http://localhost:3000/exercises/{{TEST_ID}} HTTP/1.1
+
+###
+DELETE http://localhost:3000/exercises?name=Sqaurt HTTP/1.1
+
+###
+DELETE http://localhost:3000/exercises?reps=5 HTTP/1.1
+
+#ADDITIONAL TESTING
+### Valid 1 - basic
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 5,
+    "weight": 20,
+    "unit": "lbs",
+    "date": "05-24-26"
+}
+
+### Valid 2 - kgs unit
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Squat",
+    "reps": 10,
+    "weight": 60,
+    "unit": "kgs",
+    "date": "01-15-26"
+}
+
+### Valid 3 - single-char name
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "A",
+    "reps": 1,
+    "weight": 1,
+    "unit": "lbs",
+    "date": "12-31-25"
+}
+
+### Valid 4 - larger numbers
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Deadlift",
+    "reps": 100,
+    "weight": 315,
+    "unit": "lbs",
+    "date": "07-04-26"
+}
+
+### Valid 5 - multi-word name
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Bench Press",
+    "reps": 8,
+    "weight": 135,
+    "unit": "lbs",
+    "date": "03-01-26"
+}
+
+### Valid 6 - kgs, low reps/weight
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Lunge",
+    "reps": 12,
+    "weight": 5,
+    "unit": "kgs",
+    "date": "09-09-26"
+}
+
+### Valid 7 - date at year boundary
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Pull-up",
+    "reps": 6,
+    "weight": 1,
+    "unit": "lbs",
+    "date": "12-31-99"
+}
+
+### Valid 8 - date at start of year
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Plank Hold",
+    "reps": 1,
+    "weight": 1,
+    "unit": "kgs",
+    "date": "01-01-00"
+}
+
+### Valid 9 - special characters in name
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Sit-Up's (weighted)",
+    "reps": 15,
+    "weight": 10,
+    "unit": "lbs",
+    "date": "06-15-26"
+}
+
+### Valid 10 - large weight value
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Leg Press",
+    "reps": 20,
+    "weight": 999,
+    "unit": "kgs",
+    "date": "11-11-26"
+}
+
+### Invalid 1 - name is empty string
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "",
+    "reps": 5,
+    "weight": 20,
+    "unit": "lbs",
+    "date": "05-24-26"
+}
+
+### Invalid 2 - name missing entirely
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "reps": 5,
+    "weight": 20,
+    "unit": "lbs",
+    "date": "05-24-26"
+}
+
+### Invalid 3 - reps is zero
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 0,
+    "weight": 20,
+    "unit": "lbs",
+    "date": "05-24-26"
+}
+
+### Invalid 4 - reps is negative
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": -5,
+    "weight": 20,
+    "unit": "lbs",
+    "date": "05-24-26"
+}
+
+### Invalid 5 - reps is not an integer
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 5.5,
+    "weight": 20,
+    "unit": "lbs",
+    "date": "05-24-26"
+}
+
+### Invalid 6 - weight missing entirely
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 5,
+    "unit": "lbs",
+    "date": "05-24-26"
+}
+
+### Invalid 7 - weight is a string, not a number
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 5,
+    "weight": "twenty",
+    "unit": "lbs",
+    "date": "05-24-26"
+}
+
+### Invalid 8 - unit is not lbs or kgs
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 5,
+    "weight": 20,
+    "unit": "pounds",
+    "date": "05-24-26"
+}
+
+### Invalid 9 - date in wrong format
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 5,
+    "weight": 20,
+    "unit": "lbs",
+    "date": "2026-05-24"
+}
+
+### Invalid 10 - date missing
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 5,
+    "weight": 20,
+    "unit": "lbs"
+}
+
+
+### Valid 1 - basic update
+PUT http://localhost:3000/exercises/{{ID_1}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 5,
+    "weight": 20,
+    "unit": "lbs",
+    "date": "05-24-26"
+}
+
+### Valid 2 - kgs unit
+PUT http://localhost:3000/exercises/{{ID_2}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Squat",
+    "reps": 10,
+    "weight": 60,
+    "unit": "kgs",
+    "date": "01-15-26"
+}
+
+### Valid 3 - single char name
+PUT http://localhost:3000/exercises/{{ID_3}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "A",
+    "reps": 1,
+    "weight": 1,
+    "unit": "lbs",
+    "date": "12-31-25"
+}
+
+### Valid 4 - larger numbers
+PUT http://localhost:3000/exercises/{{ID_4}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Deadlift",
+    "reps": 100,
+    "weight": 315,
+    "unit": "lbs",
+    "date": "07-04-26"
+}
+
+### Valid 5 - multi-word name
+PUT http://localhost:3000/exercises/{{ID_5}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Bench Press",
+    "reps": 8,
+    "weight": 135,
+    "unit": "lbs",
+    "date": "03-01-26"
+}
+
+### Valid 6 - kgs, low reps/weight
+PUT http://localhost:3000/exercises/{{ID_6}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Lunge",
+    "reps": 12,
+    "weight": 5,
+    "unit": "kgs",
+    "date": "09-09-26"
+}
+
+### Valid 7 - date at year boundary
+PUT http://localhost:3000/exercises/{{ID_7}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Pull-up",
+    "reps": 6,
+    "weight": 1,
+    "unit": "lbs",
+    "date": "12-31-99"
+}
+
+### Valid 8 - date at start of year
+PUT http://localhost:3000/exercises/{{ID_8}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Plank Hold",
+    "reps": 1,
+    "weight": 1,
+    "unit": "kgs",
+    "date": "01-01-00"
+}
+
+### Valid 9 - special characters in name
+PUT http://localhost:3000/exercises/{{ID_9}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Sit-Up's (weighted)",
+    "reps": 15,
+    "weight": 10,
+    "unit": "lbs",
+    "date": "06-15-26"
+}
+
+### Valid 10 - large weight value
+PUT http://localhost:3000/exercises/{{ID_10}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Leg Press",
+    "reps": 20,
+    "weight": 999,
+    "unit": "kgs",
+    "date": "11-11-26"
+}
+
+### Invalid 1 - name is empty string
+PUT http://localhost:3000/exercises/{{ID_1}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "",
+    "reps": 5,
+    "weight": 20,
+    "unit": "lbs",
+    "date": "05-24-26"
+}
+
+### Invalid 2 - name missing
+PUT http://localhost:3000/exercises/{{ID_2}} HTTP/1.1
+content-type: application/json
+
+{
+    "reps": 5,
+    "weight": 20,
+    "unit": "lbs",
+    "date": "05-24-26"
+}
+
+### Invalid 3 - reps is zero
+PUT http://localhost:3000/exercises/{{ID_3}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 0,
+    "weight": 20,
+    "unit": "lbs",
+    "date": "05-24-26"
+}
+
+### Invalid 4 - weight missing entirely
+PUT http://localhost:3000/exercises/{{ID_4}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 5,
+    "unit": "lbs",
+    "date": "05-24-26"
+}
+
+### Invalid 5 - weight is a string, not a number
+PUT http://localhost:3000/exercises/{{ID_5}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 5,
+    "weight": "twenty",
+    "unit": "lbs",
+    "date": "05-24-26"
+}
+
+### Invalid 6 - unit is not lbs or kgs
+PUT http://localhost:3000/exercises/{{ID_6}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 5,
+    "weight": 20,
+    "unit": "pounds",
+    "date": "05-24-26"
+}
+
+### Invalid 7 - unit missing
+PUT http://localhost:3000/exercises/{{ID_7}}
+ HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 5,
+    "weight": 20,
+    "date": "05-24-26"
+}
+
+### Invalid 8 - date in wrong format 
+PUT http://localhost:3000/exercises/{{ID_8}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 5,
+    "weight": 20,
+    "unit": "lbs",
+    "date": "2026-05-24"
+}
+
+### Invalid 9 - date missing
+PUT http://localhost:3000/exercises/{{ID_9}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 5,
+    "weight": 20,
+    "unit": "lbs"
+}
+
+### Invalid 10 - invalid MongoDB ObjectId in URL
+PUT http://localhost:3000/exercises/not-a-valid-id HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Crunch",
+    "reps": 5,
+    "weight": 20,
+    "unit": "lbs",
+    "date": "05-24-26"
+}
